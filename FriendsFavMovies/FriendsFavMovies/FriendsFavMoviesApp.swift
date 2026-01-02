@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct FriendsFavMoviesApp: App {
@@ -13,5 +14,6 @@ struct FriendsFavMoviesApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [Friend.self, Movie.self])
     }
 }
