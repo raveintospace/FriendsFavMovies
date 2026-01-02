@@ -11,6 +11,7 @@ import SwiftData
 @Model
 class Friend {
     var name: String
+    var favMovie: Movie?
 
     init(name: String) {
         self.name = name
@@ -24,3 +25,5 @@ class Friend {
         Friend(name: "Coen"),
     ]
 }
+
+// Multiple friends can have the same favorite movie
