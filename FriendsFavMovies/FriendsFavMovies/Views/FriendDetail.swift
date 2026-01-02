@@ -14,25 +14,33 @@ struct FriendDetail: View {
     @Environment(\.modelContext) private var context
 
     @Bindable var friend: Friend
+    let isNew: Bool
+
+    init(friend: Friend, isNew: Bool = false) {
+        self.friend = friend
+        self.isNew = isNew
+    }
 
     var body: some View {
         Form {
             TextField("Name", text: $friend.name)
                 .autocorrectionDisabled()
         }
-        .navigationTitle("Friend")
+        .navigationTitle(isNew ? "New Friend" : "Friend")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Save") {
-                    dismiss()
+            if isNew {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        dismiss()
+                    }
                 }
-            }
-
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    context.delete(friend)
-                    dismiss()
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        context.delete(friend)
+                        dismiss()
+                    }
                 }
             }
         }
@@ -42,6 +50,12 @@ struct FriendDetail: View {
 #Preview {
     NavigationStack {
         FriendDetail(friend: SampleData.shared.friend)
+    }
+}
+
+#Preview("New Friend") {
+    NavigationStack {
+        FriendDetail(friend: SampleData.shared.friend, isNew: true)
     }
 }
 

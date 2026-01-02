@@ -14,6 +14,12 @@ struct MovieDetail: View {
     @Environment(\.modelContext) private var context
 
     @Bindable var movie: Movie
+    let isNew: Bool
+
+    init(movie: Movie, isNew: Bool = false) {
+        self.movie = movie
+        self.isNew = isNew
+    }
 
     var body: some View {
         Form {
@@ -22,19 +28,21 @@ struct MovieDetail: View {
 
             DatePicker("Release date", selection: $movie.releaseDate, displayedComponents: .date)
         }
-        .navigationTitle("Movie")
+        .navigationTitle(isNew ? "New Movie" : "Movie")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Save") {
-                    dismiss()
+            if isNew {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        dismiss()
+                    }
                 }
-            }
 
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    context.delete(movie)
-                    dismiss()
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        context.delete(movie)
+                        dismiss()
+                    }
                 }
             }
         }
@@ -44,5 +52,11 @@ struct MovieDetail: View {
 #Preview {
     NavigationStack {
         MovieDetail(movie: SampleData.shared.movie)
+    }
+}
+
+#Preview("New Movie") {
+    NavigationStack {
+        MovieDetail(movie: SampleData.shared.movie, isNew: true)
     }
 }
