@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FriendDetail: View {
+
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
 
     @Bindable var friend: Friend
 
@@ -18,6 +22,20 @@ struct FriendDetail: View {
         }
         .navigationTitle("Friend")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    dismiss()
+                }
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    context.delete(friend)
+                    dismiss()
+                }
+            }
+        }
     }
 }
 

@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MovieDetail: View {
+
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
 
     @Bindable var movie: Movie
 
@@ -20,6 +24,20 @@ struct MovieDetail: View {
         }
         .navigationTitle("Movie")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    dismiss()
+                }
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    context.delete(movie)
+                    dismiss()
+                }
+            }
+        }
     }
 }
 
