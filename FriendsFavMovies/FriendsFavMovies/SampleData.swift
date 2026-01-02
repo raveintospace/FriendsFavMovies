@@ -66,8 +66,8 @@ class SampleData {
 }
 
 /*
- When you set the value of a property at one end of a relationship (favoriteMovie), SwiftData automatically updates the corresponding property on the other end (favoritedBy) for you. You can choose which of the two properties to set.
+ When setting the value of a property at one end of a relationship (favoriteMovie), SwiftData automatically updates the corresponding property on the other end (favoritedBy) for you. You can choose which of the two properties to set.
 
- If not, we would have to do something like this
- Movie.sampleData[0].favoritedBy = [Friend.sampleData[2], Friend.sampleData[3]]
+ If not, we would have to do something like this:
+    Movie.sampleData[0].favoritedBy = [Friend.sampleData[2], Friend.sampleData[3]]
  */
