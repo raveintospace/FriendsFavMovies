@@ -18,6 +18,16 @@ class SampleData {
         modelContainer.mainContext
     }
 
+    // Used in FriendDetail preview
+    var friend: Friend {
+        Friend.sampleData.first!
+    }
+
+    // Used in MovieDetail preview
+    var movie: Movie {
+        Movie.sampleData.first!
+    }
+
     private init() {
         let schema = Schema([
             Friend.self,
