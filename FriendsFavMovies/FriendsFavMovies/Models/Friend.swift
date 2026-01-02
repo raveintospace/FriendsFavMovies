@@ -15,4 +15,12 @@ class Friend {
     init(name: String) {
         self.name = name
     }
+
+    static let sampleData = [
+        Friend(name: "Dani"),
+        Friend(name: "Larry"),
+        Friend(name: "Oscar"),
+        Friend(name: "Junai"),
+        Friend(name: "Coen"),
+    ]
 }
