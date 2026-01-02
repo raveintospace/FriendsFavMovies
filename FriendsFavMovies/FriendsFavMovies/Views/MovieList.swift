@@ -23,6 +23,11 @@ struct MovieList: View {
                 }
             }
             .navigationTitle("Movies")
+            .toolbar {
+                ToolbarItem {
+                    Button("Add movie", systemImage: "plus", action: addMovie)
+                }
+            }
         } detail: {
             Text("Select a movie")
                 .navigationTitle("Movie")
@@ -34,4 +39,11 @@ struct MovieList: View {
 #Preview {
     MovieList()
         .modelContainer(SampleData.shared.modelContainer)
+}
+
+extension MovieList {
+
+    private func addMovie() {
+        context.insert(Movie(title: "New movie", releaseDate: .now))
+    }
 }

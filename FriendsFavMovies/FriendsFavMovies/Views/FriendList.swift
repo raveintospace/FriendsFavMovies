@@ -23,6 +23,11 @@ struct FriendList: View {
                 }
             }
             .navigationTitle("Friends")
+            .toolbar {
+                ToolbarItem {
+                    Button("Add friend", systemImage: "plus", action: addFriend)
+                }
+            }
         } detail: {
             Text("Select a friend")
                 .navigationTitle("Friend")
@@ -34,4 +39,11 @@ struct FriendList: View {
 #Preview {
     FriendList()
         .modelContainer(SampleData.shared.modelContainer)
+}
+
+extension FriendList {
+
+    private func addFriend() {
+        context.insert(Friend(name: "New friend"))
+    }
 }
