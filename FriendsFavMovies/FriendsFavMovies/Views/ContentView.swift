@@ -1,0 +1,28 @@
+//
+//  ContentView.swift
+//  FriendsFavMovies
+//
+//  Created by Uri on 2/1/26.
+//
+
+import SwiftUI
+import SwiftData
+
+struct ContentView: View {
+    var body: some View {
+        TabView {
+            Tab("Friends", systemImage: "person.and.person") {
+                FriendList()
+            }
+
+            Tab("Movies", systemImage: "film.stack") {
+                Text("Movies")
+            }
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+        .modelContainer(for: Friend.self, inMemory: true)
+}
