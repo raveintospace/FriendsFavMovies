@@ -1,7 +1,7 @@
 //
 //  FriendsFavMoviesApp.swift
 //  FriendsFavMovies
-//
+//  https://developer.apple.com/tutorials/develop-in-swift/navigate-sample-data
 //  Created by Uri on 2/1/26.
 //
 
