@@ -16,11 +16,15 @@ struct FriendDetail: View {
             TextField("Name", text: $friend.name)
                 .autocorrectionDisabled()
         }
+        .navigationTitle("Friend")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    FriendDetail(friend: SampleData.shared.friend)
+    NavigationStack {
+        FriendDetail(friend: SampleData.shared.friend)
+    }
 }
 
 /*
