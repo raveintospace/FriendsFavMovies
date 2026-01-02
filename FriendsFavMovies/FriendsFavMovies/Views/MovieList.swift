@@ -10,47 +10,59 @@ import SwiftData
 
 struct MovieList: View {
 
-    @Query(sort: \Movie.title) private var movies: [Movie]
+    @Query private var movies: [Movie]
     @Environment(\.modelContext) private var context
 
     @State private var newMovie: Movie?
 
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(movies) { movie in
-                    NavigationLink(movie.title) {
-                        MovieDetail(movie: movie)
-                    }
-                }
-                .onDelete(perform: deleteMovies(indexes:))
-            }
-            .navigationTitle("Movies")
-            .toolbar {
-                ToolbarItem {
-                    Button("Add movie", systemImage: "plus", action: addMovie)
-                }
+    init(titleFilter: String = "") {
+        let predicate = #Predicate<Movie> { movie in
+            titleFilter.isEmpty || movie.title.localizedStandardContains(titleFilter)
+        }
 
-                ToolbarItem(placement: .topBarTrailing) {
-                    EditButton()
+        _movies = Query(filter: predicate, sort: \Movie.title)
+    }
+
+    var body: some View {
+        List {
+            ForEach(movies) { movie in
+                NavigationLink(movie.title) {
+                    MovieDetail(movie: movie)
                 }
             }
-            .sheet(item: $newMovie) { movie in
-                NavigationStack {
-                    MovieDetail(movie: movie, isNew: true)
-                }
+            .onDelete(perform: deleteMovies(indexes:))
+        }
+        .navigationTitle("Movies")
+        .toolbar {
+            ToolbarItem {
+                Button("Add movie", systemImage: "plus", action: addMovie)
             }
-        } detail: {
-            Text("Select a movie")
-                .navigationTitle("Movie")
-                .navigationBarTitleDisplayMode(.inline)
+
+            ToolbarItem(placement: .topBarTrailing) {
+                EditButton()
+            }
+        }
+        .sheet(item: $newMovie) { movie in
+            NavigationStack {
+                MovieDetail(movie: movie, isNew: true)
+            }
+            .interactiveDismissDisabled()
         }
     }
 }
 
 #Preview {
-    MovieList()
-        .modelContainer(SampleData.shared.modelContainer)
+    NavigationStack {
+        MovieList()
+            .modelContainer(SampleData.shared.modelContainer)
+    }
+}
+
+#Preview("Filtered") {
+    NavigationStack {
+        MovieList(titleFilter: "tr")
+            .modelContainer(SampleData.shared.modelContainer)
+    }
 }
 
 extension MovieList {
